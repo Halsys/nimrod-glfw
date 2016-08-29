@@ -309,9 +309,9 @@ type
     KeyFun* = proc (window: Window; key: cint; scancode: cint; action: cint; modifiers: cint) {.cdecl.}
     CharFun* = proc (window: Window; character: cuint) {.cdecl.}
     CharModsFun* = proc (window: Window; codepoint: cuint; mods: cint) {.cdecl.}
-    DropFun* = proc (window: Window; count: cint; paths: ptr cstring)
+    DropFun* = proc (window: Window; count: cint; paths: cstringArray) {.cdecl.}
     MonitorFun* = proc (monitor: Monitor; connected: cint) {.cdecl.}
-    JoystickFun* = proc (joy : cint; event: cint)
+    JoystickFun* = proc (joy : cint; event: cint) {.cdecl.}
 
     VidMode* {.pure, final.} = object
         width*: cint
@@ -548,7 +548,7 @@ proc SetCursorEnterCallback*(window: Window; cbfun: CursorEnterFun): CursorEnter
 proc SetScrollCallback*(window: Window; cbfun: ScrollFun): ScrollFun {.cdecl, importc: "glfwSetScrollCallback", dynlib: GlfwLib.}
 
 
-proc SetDropCallback*(window: Window, cbfun: DropFun) {.cdecl, importc: "glfwSetDropCallback", dynlib: GlfwLib.}
+proc SetDropCallback*(window: Window, cbfun: DropFun): DropFun {.cdecl, importc: "glfwSetDropCallback", dynlib: GlfwLib.}
 
 
 proc JoystickPresent*(joy: cint): cint {.cdecl, importc: "glfwJoystickPresent", dynlib: GlfwLib.}
